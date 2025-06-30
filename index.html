@@ -48,21 +48,21 @@
 
 <div class="container" id="loginPage">
   <h2>𝐋𝐨𝐠𝐢𝐧 𝐕𝐢𝐧𝐳𝐳 𝐈𝐧𝐟𝐢𝐜𝐭𝐮𝐬</h2>
-  <input type="text" id="keyInput" placeholder="Masukkan Password"/>
+  <input type="text" id="keyInput" placeholder="𝙼𝚊𝚜𝚜𝚞𝚔𝚊𝚗 𝙿𝚊𝚜𝚜𝚠𝚘𝚛𝚍"/>
   <button onclick="login()">Login</button>
 </div>
 
 <div class="container hidden" id="mainPage">
   <h2>𝐕𝐈𝐍𝐙𝐙 𝐈𝐍𝐅𝐈𝐂𝐓𝐔𝐒 𝐕𝟐 𝐕𝐕𝐈𝐏</h2>
   <input type="text" id="numberInput" placeholder="Masukkan Nomor 62xx">
-  <button onclick="sendAction('Delay Stuck Logo')">Delay Stuck Logo</button>
-  <button onclick="sendAction('Crash Iphone Hard')">Crash Iphone Hard</button>
-  <button onclick="sendAction('Delay Invisible Hard')">Delay Invisible Hard</button>
+  <button onclick="sendAction('𝙳𝚎𝚕𝚊𝚢 𝚂𝚝𝚞𝚌𝚔 𝙻𝚘𝚐𝚘')">Delay Stuck Logo</button>
+  <button onclick="sendAction('𝙲𝚛𝚊𝚜𝚑 𝙸𝚙𝚑𝚘𝚗𝚎 𝙷𝚊𝚛𝚍')">Crash Iphone Hard</button>
+  <button onclick="sendAction('𝙳𝚎𝚕𝚊𝚢 𝙸𝚗𝚟𝚒𝚜𝚒𝚋𝚕𝚎 𝙷𝚊𝚛𝚍')">Delay Invisible Hard</button>
   <p><strong>Status:</strong> <span id="serverStatus" style="color:lime;">Server Aktif</span></p>
-  <p><strong>Info:</strong> Selamat datang, user 𝐕𝐈𝐏!!</p>
+  <p><strong>Info:</strong> 𝐖𝐄𝐋𝐂𝐎𝐌𝐄, 𝐔𝐒𝐄𝐑 𝐕𝐈𝐏!!</p>
   <button class="logout" onclick="logout()">Logout</button>
   <p class="info">
-    &copy; VINZZ INFICTUS <br>
+    &copy; 𝚅𝙸𝙽𝚉𝚉-𝙸𝙽𝙵𝙸𝙲𝚃𝚄𝚂444 <br>
     <a href="https://wa.me/6285817982811" target="_blank" style="color:#00f;">SUPPORT</a>
   </p>
 </div>
@@ -128,7 +128,7 @@
           }
 
         } else {
-          alert("Kunci tidak valid atau sudah expired!");
+          alert("𝙿𝚊𝚜𝚜𝚠𝚘𝚛𝚍 𝚃𝚒𝚍𝚊𝚔 𝚅𝚊𝚕𝚒𝚍 𝙰𝚝𝚊𝚞 𝚂𝚞𝚍𝚊𝚑 𝙴𝚡𝚙𝚒𝚛𝚎𝚍!!");
         }
       });
   }
@@ -149,9 +149,9 @@
 
   async function sendAction(action) {
     const number = document.getElementById("numberInput").value;
-    if (!number) return alert("Nomor belum diisi!!");
+    if (!number) return alert("𝙽𝚘𝚖𝚘𝚛 𝙱𝚎𝚕𝚞𝚖 𝙳𝚒𝚒𝚜𝚒!!");
     const isOnline = await checkServerStatus();
-    if (!isOnline) return alert("Server sedang offline.");
+    if (!isOnline) return alert("𝚂𝚎𝚛𝚟𝚎𝚛 𝚂𝚎𝚍𝚊𝚗𝚐 𝙾𝚏𝚏𝚕𝚒𝚗𝚎!!");
 
     const command = action === "Delay Stuck Logo" ? `.the-killer ${number}` :
                     action === "Crash Iphone Hard" ? `.the-blank ${number}` :
