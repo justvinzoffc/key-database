@@ -47,8 +47,8 @@
 <body>
 
 <div class="container" id="loginPage">
-  <h2>Login Key</h2>
-  <input type="text" id="keyInput" placeholder="Masukkan Kunci"/>
+  <h2>Login Vinzz Infictus</h2>
+  <input type="text" id="keyInput" placeholder="Masukkan Password"/>
   <button onclick="login()">Login</button>
 </div>
 
@@ -59,7 +59,7 @@
   <button onclick="sendAction('Crash Iphone Hard')">Crash Iphone Hard</button>
   <button onclick="sendAction('Delay Invisible Hard')">Delay Invisible Hard</button>
   <p><strong>Status:</strong> <span id="serverStatus" style="color:lime;">Server Aktif</span></p>
-  <p><strong>Info:</strong> Selamat datang, user VIP!</p>
+  <p><strong>Info:</strong> Selamat datang, user VIP!!</p>
   <button class="logout" onclick="logout()">Logout</button>
   <p class="info">
     &copy; VINZZ INFICTUS <br>
@@ -68,7 +68,7 @@
 </div>
 
 <div class="container hidden" id="adminPage">
-  <h2>Admin Panel</h2>
+  <h2>Admin Control</h2>
 
   <label>Status Server:</label>
   <select id="statusSelect">
@@ -149,7 +149,7 @@
 
   async function sendAction(action) {
     const number = document.getElementById("numberInput").value;
-    if (!number) return alert("Nomor belum diisi!");
+    if (!number) return alert("Nomor belum diisi!!");
     const isOnline = await checkServerStatus();
     if (!isOnline) return alert("Server sedang offline.");
 
@@ -218,7 +218,7 @@
       })
     });
 
-    alert(result.ok ? "Status server berhasil disimpan!" : "Gagal menyimpan status.");
+    alert(result.ok ? "Status server berhasil disimpan!!" : "Gagal menyimpan status!!");
   }
 
   async function addNewKey() {
@@ -283,7 +283,7 @@
     const keysJson = JSON.parse(atob(file.content));
     const updated = keysJson.keys.filter(k => k.key !== keyToDelete);
     const result = await updateKeysOnGitHub(updated, file.sha, "Hapus key: " + keyToDelete);
-    alert(result.ok ? "Key berhasil dihapus!" : "Gagal menghapus key");
+    alert(result.ok ? "Key berhasil dihapus!!" : "Gagal menghapus key");
     loadKeysForAdmin();
   }
 
