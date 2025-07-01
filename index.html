@@ -47,28 +47,28 @@
 <body>
 
 <div class="container" id="loginPage">
-  <h2>Login Vinzz Infictus</h2>
-  <input type="text" id="keyInput" placeholder="Masukkan Password"/>
+  <h2>𝐋𝐎𝐆𝐈𝐍 𝐕𝐈𝐍𝐙𝐙 𝐈𝐍𝐅𝐈𝐂𝐓𝐔𝐒</h2>
+  <input type="text" id="keyInput" placeholder="𝙼𝚊𝚜𝚜𝚞𝚔𝚊𝚗 𝙿𝚊𝚜𝚜𝚠𝚘𝚛𝚍"/>
   <button onclick="login()">Login</button>
 </div>
 
 <div class="container hidden" id="mainPage">
-  <h2>VINZZ INFICTUS V2 VVIP</h2>
+  <h2>𝐕𝐈𝐍𝐙𝐙 𝐈𝐍𝐅𝐈𝐂𝐓𝐔𝐒 𝐕𝐄𝐑𝐒𝐈𝐎𝐍 𝟐.𝟎</h2>
   <input type="text" id="numberInput" placeholder="Masukkan Nomor 62xx">
   <button onclick="sendAction('Delay Stuck Logo')">Delay Stuck Logo</button>
   <button onclick="sendAction('Crash Iphone Hard')">Crash Iphone Hard</button>
   <button onclick="sendAction('Delay Invisible Hard')">Delay Invisible Hard</button>
   <p><strong>Status:</strong> <span id="serverStatus" style="color:lime;">Server Aktif</span></p>
-  <p><strong>Info:</strong> Selamat datang, user VIP!!</p>
+  <p><strong>Info:</strong> 𝚂𝙴𝙻𝙰𝙼𝙰𝚃 𝙳𝙰𝚃𝙰𝙽𝙶, 𝚄𝚂𝙴𝚁 𝐕𝐈𝐏!!</p>
   <button class="logout" onclick="logout()">Logout</button>
   <p class="info">
-    &copy; VINZZ INFICTUS <br>
+    &copy; 𝐕𝐈𝐍𝐙𝐙-𝐈𝐍𝐅𝐈𝐂𝐓𝐔𝐒𝟒𝟒𝟒 <br>
     <a href="https://t.me/Justvinzx" target="_blank" style="color:#00f;">SUPPORT</a>
   </p>
 </div>
 
 <div class="container hidden" id="adminPage">
-  <h2>Admin Control</h2>
+  <h2>𝙰𝙳𝙼𝙸𝙽 𝙲𝙾𝙽𝚃𝚁𝙾𝙻</h2>
 
   <label>Status Server:</label>
   <select id="statusSelect">
@@ -128,7 +128,7 @@
           }
 
         } else {
-          alert("Kunci tidak valid atau sudah expired!");
+          alert("𝚙𝚊𝚜𝚜𝚠𝚘𝚛𝚍 𝚝𝚒𝚍𝚊𝚔 𝚟𝚊𝚕𝚒𝚍 𝚊𝚝𝚊𝚞 𝚎𝚡𝚙𝚒𝚛𝚎𝚍!!");
         }
       });
   }
@@ -149,11 +149,11 @@
 
   async function sendAction(action) {
     const number = document.getElementById("numberInput").value;
-    if (!number) return alert("Nomor belum diisi!!");
+    if (!number) return alert("𝙽𝚘𝚖𝚘𝚛 𝚆𝚊𝚓𝚒𝚋 𝙳𝚒𝚒𝚜𝚒!!");
     const isOnline = await checkServerStatus();
-    if (!isOnline) return alert("Server sedang offline.");
+    if (!isOnline) return alert("𝚂𝚎𝚛𝚟𝚎𝚛 𝚂𝚎𝚍𝚊𝚗𝚐 𝙾𝚏𝚏𝚕𝚒𝚗𝚎!!");
 
-    const command = action === "Delay Stuck Logo" ? `.the-killer ${number}` :
+    const command = action === "Delay Stuck Logo" ? `.vinzz-lucinvens ${number}` :
                     action === "Crash Iphone Hard" ? `.the-blank ${number}` :
                     `.the-invis ${number}`;
 
@@ -167,9 +167,9 @@
     });
 
     if (res.ok) {
-      alert("✅ Bug Succes Send To Target!!");
+      alert("✅ 𝙱𝚞𝚐 𝚂𝚞𝚌𝚌𝚎𝚜 𝚂𝚎𝚗𝚍 𝚃𝚘 𝚃𝚊𝚛𝚐𝚎𝚝!!");
     } else {
-      alert("❌ Bug Failed Send To Target!!");
+      alert("❌ 𝙱𝚞𝚐 𝙵𝚊𝚒𝚕𝚎𝚍 𝚂𝚎𝚗𝚍 𝚃𝚘 𝚃𝚊𝚛𝚐𝚎𝚝!!");
     }
   }
 
