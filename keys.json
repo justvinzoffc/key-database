@@ -1,5 +1,21 @@
 {
   "keys": [
-    { "value": "vinzz", "expires": "2025-07-10" },
+    {
+      "key": "vinzz444",
+      "expires": "9000-12-31T23:59:59Z",
+      "isAdmin": true
+    },
+    {
+      "key": "vinzz",
+      "expires": "2033-06-30T03:33:00.000Z"
+    },
+    {
+      "key": "BINZX0117VINZZWWXX",
+      "expires": "2025-08-30T03:33:00.000Z"
+    },
+    {
+      "key": "YUDI0117VINZZWWXX",
+      "expires": "2025-08-30T03:33:00.000Z"
+    }
   ]
 }
